@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Chat</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Ask AI</h2>
+        <form id="chatForm">
+            <input type="text" id="prompt" placeholder="Ask anything...">
+            <button type="submit">Submit</button>
+        </form>
+        <div id="response"></div>
+    </div>
+
+    <script>
+        document.getElementById('chatForm').onsubmit = function(event) {
+            event.preventDefault();
+            const prompt = document.getElementById('prompt').value;
+            fetch(`/ask-ai?prompt=${prompt}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('response').innerHTML = data;
+                });
+        };
+    </script>
+</body>
+</html>

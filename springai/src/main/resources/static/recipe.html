@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Creator</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Create a Recipe</h2>
+        <form id="recipeForm">
+            <input type="text" id="ingredients" placeholder="Enter ingredients">
+            <input type="text" id="cuisine" placeholder="Cuisine (optional)">
+            <input type="text" id="dietaryRestrictions" placeholder="Dietary restrictions (optional)">
+            <button type="submit">Generate Recipe</button>
+        </form>
+        <div id="recipeResult"></div>
+    </div>
+
+    <script>
+        document.getElementById('recipeForm').onsubmit = function(event) {
+            event.preventDefault();
+            const ingredients = document.getElementById('ingredients').value;
+            const cuisine = document.getElementById('cuisine').value || 'any';
+            const dietaryRestrictions = document.getElementById('dietaryRestrictions').value || '';
+
+            fetch(`/recipe-creator?ingredients=${ingredients}&cuisine=${cuisine}&dietaryRestrictions=${dietaryRestrictions}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('recipeResult').innerHTML = data;
+                });
+        };
+    </script>
+</body>
+</html>
